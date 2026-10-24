@@ -12,8 +12,10 @@ npm run build    # statische Seite in dist/
 
 ## Aufbau
 
-- `src/pages/index.astro` – Startseite (Titel, Bild, Kurztext, Kontaktformular)
-- `src/pages/impressum.astro`, `src/pages/datenschutz.astro` – Rechtliches
+- `src/i18n.ts` – alle Texte auf Deutsch und Englisch sowie die Seitenpfade beider Sprachen
+- `src/components/Home.astro` – Startseite (Titel, Bild, Kurztext, Kontaktformular), für beide Sprachen
+- `src/pages/` – Deutsch: `/`, `/impressum/`, `/datenschutz/` · Englisch: `/en/`, `/en/imprint/`, `/en/privacy/`
+- `src/components/Logo.astro` – Logo als eingebettete Vektorgrafik (aus `public/logo.svg`) mit Hover-Effekt
 - `src/layouts/Layout.astro` – Kopfzeile, Footer mit Firmenangaben, globale Styles
 - `src/components/ContactForm.astro` – Kontaktformular, Versand über EmailJS
 - `public/` – Bilder und Icons

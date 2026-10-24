@@ -1,0 +1,337 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from './ContactForm.astro';
+import { ui, type Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].home;
+---
+
+<Layout title={t.title} lang={lang} page="home">
+	<main>
+		<section class="hero container">
+			<h1 class="reveal">{t.h1a} <em>{t.h1b}</em></h1>
+			<div class="hero-meta reveal reveal-2">
+				<span class="caps">{t.metaLeft}</span>
+				<span class="meta-line" aria-hidden="true"></span>
+				<span class="caps">{t.metaRight}</span>
+			</div>
+		</section>
+
+		<div class="container">
+			<figure class="hero-image reveal-img">
+				<img src="/heronew.webp" width="2560" height="1100" alt={t.imgAlt} fetchpriority="high" />
+			</figure>
+		</div>
+
+		<section class="intro container">
+			<p class="caps label in-view">
+				<span class="label-num">01</span>
+				<span class="label-rule" aria-hidden="true"></span>
+				{t.about}
+			</p>
+			<div class="intro-body">
+				<p class="lead in-view">{t.lead}</p>
+				<a class="partner in-view" href="https://www.payrexx.com/?ref=s32026" target="_blank" rel="noopener">
+					<span class="caps">{t.partner}</span>
+					<span class="partner-arrow" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</section>
+
+		<section class="contact" id="kontakt" aria-labelledby="kontakt-titel">
+			<div class="container contact-inner">
+				<div class="contact-head">
+					<p class="caps label label-dark in-view">
+						<span class="label-num">02</span>
+						<span class="label-rule" aria-hidden="true"></span>
+						{t.contact}
+					</p>
+					<h2 id="kontakt-titel" class="in-view">{t.h2a} <em>{t.h2b}</em></h2>
+				</div>
+				<div class="in-view">
+					<ContactForm lang={lang} />
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	/* ---------- Hero ---------- */
+	.hero {
+		padding-top: clamp(40px, 6vw, 88px);
+		padding-bottom: clamp(28px, 3.5vw, 48px);
+	}
+
+	h1 {
+		margin: 0;
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: clamp(36px, 5.2vw, 80px);
+		line-height: 1;
+		letter-spacing: -0.025em;
+		margin-left: -0.03em;
+		max-width: 12em;
+		text-wrap: balance;
+	}
+
+	h1 em {
+		display: block;
+		font-style: italic;
+		color: var(--gold);
+	}
+
+	.hero-meta {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		margin-top: clamp(20px, 3vw, 36px);
+		color: var(--ink-2);
+	}
+
+	.meta-line {
+		flex: 1;
+		height: 1px;
+		background: var(--line);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.meta-line::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--gold);
+		transform-origin: left;
+		transform: scaleX(0);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.meta-line::after {
+			animation: draw 1.8s 0.6s var(--ease) forwards;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.meta-line::after {
+			transform: scaleX(1);
+		}
+	}
+
+	@keyframes draw {
+		to {
+			transform: scaleX(1);
+		}
+	}
+
+	/* ---------- Bild ---------- */
+	.hero-image {
+		margin: 0;
+		overflow: hidden;
+		aspect-ratio: 2560 / 1040;
+		max-height: 84vh;
+		width: 100%;
+		background: var(--paper-2);
+	}
+
+	.hero-image img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 32% 25%;
+		scale: 1.035;
+		transform-origin: 0 0;
+	}
+
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) and (min-width: 861px) {
+			.hero-image img {
+				height: 108%;
+				animation: settle 2.4s var(--ease) both, parallax linear both;
+				animation-timeline: auto, view();
+				animation-range: normal, cover 0% cover 100%;
+			}
+			@keyframes parallax {
+				from {
+					translate: 0 0;
+				}
+				to {
+					translate: 0 -7%;
+				}
+			}
+		}
+	}
+
+	/* ---------- Labels ---------- */
+	.label {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 0;
+		color: var(--ink-2);
+	}
+
+	.label-num {
+		color: var(--gold);
+	}
+
+	.label-rule {
+		width: 36px;
+		height: 1px;
+		background: var(--gold);
+	}
+
+	.label-dark {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+	.label-dark .label-num,
+	.label-dark .label-rule {
+		color: var(--gold-light);
+		background-color: transparent;
+	}
+
+	.label-dark .label-rule {
+		background: var(--gold-light);
+	}
+
+	/* ---------- Intro ---------- */
+	.intro {
+		display: grid;
+		grid-template-columns: minmax(180px, 1fr) 2.4fr;
+		gap: clamp(24px, 5vw, 80px);
+		padding-top: clamp(56px, 7vw, 112px);
+		padding-bottom: clamp(64px, 8vw, 120px);
+	}
+
+	.intro .label {
+		align-self: start;
+		padding-top: 0.9em;
+	}
+
+	.lead {
+		margin: 0;
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: clamp(28px, 3.6vw, 52px);
+		line-height: 1.22;
+		letter-spacing: -0.01em;
+		color: var(--ink);
+		text-wrap: pretty;
+		font-variant-numeric: lining-nums;
+	}
+
+	.partner {
+		display: inline-flex;
+		align-items: center;
+		gap: 18px;
+		margin-top: clamp(32px, 4vw, 48px);
+		padding: 18px 0;
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+		text-decoration: none;
+		color: var(--ink-2);
+		transition: color 0.4s var(--ease), gap 0.5s var(--ease);
+	}
+
+	.partner-arrow {
+		display: grid;
+		place-items: center;
+		width: 34px;
+		height: 34px;
+		border: 1px solid var(--gold);
+		border-radius: 50%;
+		color: var(--gold);
+		font-size: 13px;
+		transition: background 0.4s var(--ease), color 0.4s var(--ease);
+	}
+
+	.partner:hover {
+		color: var(--ink);
+		gap: 26px;
+	}
+
+	.partner:hover .partner-arrow {
+		background: var(--gold);
+		color: var(--paper);
+	}
+
+	/* ---------- Kontakt ---------- */
+	.contact {
+		background: var(--dark);
+		color: #fff;
+	}
+
+	.contact-inner {
+		display: grid;
+		grid-template-columns: 1fr 1.15fr;
+		gap: clamp(40px, 6vw, 96px);
+		padding-top: clamp(64px, 7.5vw, 112px);
+		padding-bottom: clamp(64px, 7.5vw, 112px);
+	}
+
+	.contact-head .label {
+		margin-bottom: 32px;
+	}
+
+	h2 {
+		margin: 0;
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: clamp(44px, 4.6vw, 68px);
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+
+	h2 em {
+		display: block;
+		font-style: italic;
+		color: var(--gold-light);
+	}
+
+	/* ---------- Responsive ---------- */
+	@media (max-width: 860px) {
+		.intro,
+		.contact-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.intro .label {
+			padding-top: 0;
+		}
+
+		.hero-image {
+			aspect-ratio: 16 / 9;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.hero-meta {
+			gap: 14px;
+		}
+
+		.hero-meta .caps {
+			font-size: 10px;
+			letter-spacing: 0.24em;
+		}
+
+		.hero-meta .caps:last-child {
+			display: none;
+		}
+
+		.partner {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.partner .caps {
+			letter-spacing: 0.2em;
+		}
+	}
+</style>

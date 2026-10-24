@@ -5,39 +5,45 @@ import '@fontsource/cormorant-garamond/400.css';
 import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/300-italic.css';
 import Logo from '../components/Logo.astro';
+import { ui, routes, type Lang, type PageKey } from '../i18n';
 
 interface Props {
 	title: string;
+	lang: Lang;
+	page: PageKey;
 	description?: string;
 	noindex?: boolean;
 }
 
-const {
-	title,
-	description = 'Ivan Schmid – Unternehmer aus Steffisburg. Seit über 25 Jahren baue ich Unternehmen, Produkte und digitale Plattformen auf.',
-	noindex = false,
-} = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const { title, lang, page, description, noindex = false } = Astro.props;
+const t = ui[lang];
+const desc = description ?? t.description;
+const canonical = new URL(routes[page][lang], Astro.site).href;
+const altDe = new URL(routes[page].de, Astro.site).href;
+const altEn = new URL(routes[page].en, Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="de-CH">
+<html lang={t.htmlLang}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
-		<meta name="description" content={description} />
+		<meta name="description" content={desc} />
 		<meta name="author" content="Ivan Schmid" />
 		<meta name="theme-color" content="#faf8f4" />
 		{noindex && <meta name="robots" content="noindex" />}
 		<link rel="canonical" href={canonical} />
+		<link rel="alternate" hreflang="de-CH" href={altDe} />
+		<link rel="alternate" hreflang="en" href={altEn} />
+		<link rel="alternate" hreflang="x-default" href={altDe} />
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
+		<meta property="og:description" content={desc} />
 		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="de_CH" />
+		<meta property="og:locale" content={t.ogLocale} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={new URL('/heronew.webp', Astro.site).href} />
 	</head>
@@ -45,8 +51,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 		<header class="site-header">
 			<div class="container">
 				<div class="header-inner">
-					<a href="/" aria-label="Schmid Business Solutions – Startseite"><Logo /></a>
-					<a class="header-link" href="/#kontakt">Kontakt</a>
+					<a href={routes.home[lang]} aria-label={t.homeAria}><Logo /></a>
+					<div class="header-right">
+						<nav class="lang-switch" aria-label={t.langLabel}>
+							<a href={routes[page].de} hreflang="de" lang="de" aria-current={lang === 'de' ? 'true' : undefined}>DE</a>
+							<span aria-hidden="true">/</span>
+							<a href={routes[page].en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+						</nav>
+						<a class="header-link" href={routes.home[lang] + '#kontakt'}>{t.contactLink}</a>
+					</div>
 				</div>
 			</div>
 		</header>
@@ -61,15 +74,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 						<address>
 							Hardeggweg 2<br />
 							3612 Steffisburg<br />
-							Schweiz
+							{t.country}
 						</address>
 					</div>
 					<div class="footer-col">
-						<p class="footer-label">Kontakt</p>
-						<p>
-							<a href="tel:+41796225329">+41 79 622 53 29</a><br />
-							<a href="mailto:office@ivanschmid.com">office@ivanschmid.com</a>
-						</p>
+						<p class="footer-label">{t.footerContact}</p>
+						<p><a href="mailto:office@ivanschmid.com">office@ivanschmid.com</a></p>
 					</div>
 					<div class="footer-col">
 						<p class="footer-label">UID</p>
@@ -78,9 +88,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 				</div>
 				<div class="footer-inner">
 					<span>© {new Date().getFullYear()} Schmid Business Solutions</span>
-					<nav aria-label="Rechtliches">
-						<a href="/impressum/">Impressum</a>
-						<a href="/datenschutz/">Datenschutz</a>
+					<nav aria-label={t.legalNav}>
+						<a href={routes.imprint[lang]}>{t.imprint}</a>
+						<a href={routes.privacy[lang]}>{t.privacy}</a>
 					</nav>
 				</div>
 			</div>
@@ -256,6 +266,35 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 	.header-link:hover::after {
 		transform: scaleX(1);
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: clamp(20px, 3vw, 40px);
+	}
+
+	.lang-switch {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.2em;
+		color: var(--line);
+	}
+
+	.lang-switch a {
+		color: var(--muted);
+		transition: color 0.3s var(--ease);
+	}
+
+	.lang-switch a:hover {
+		color: var(--gold);
+	}
+
+	.lang-switch a[aria-current] {
+		color: var(--ink);
 	}
 
 	.site-footer {
