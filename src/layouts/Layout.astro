@@ -5,7 +5,7 @@ import '@fontsource/cormorant-garamond/400.css';
 import '@fontsource/cormorant-garamond/500.css';
 import '@fontsource/cormorant-garamond/300-italic.css';
 import Logo from '../components/Logo.astro';
-import { ui, routes, type Lang, type PageKey } from '../i18n';
+import { ui, routes, linkedin, type Lang, type PageKey } from '../i18n';
 
 interface Props {
 	title: string;
@@ -79,7 +79,10 @@ const altEn = new URL(routes[page].en, Astro.site).href;
 					</div>
 					<div class="footer-col">
 						<p class="footer-label">{t.footerContact}</p>
-						<p><a href="mailto:office@ivanschmid.com">office@ivanschmid.com</a></p>
+						<p>
+							<a href="mailto:office@ivanschmid.com">office@ivanschmid.com</a><br />
+							<a href={linkedin} target="_blank" rel="noopener">LinkedIn ↗</a>
+						</p>
 					</div>
 					<div class="footer-col">
 						<p class="footer-label">UID</p>
@@ -91,6 +94,7 @@ const altEn = new URL(routes[page].en, Astro.site).href;
 					<nav aria-label={t.legalNav}>
 						<a href={routes.imprint[lang]}>{t.imprint}</a>
 						<a href={routes.privacy[lang]}>{t.privacy}</a>
+						<a href={routes.terms[lang]}>{t.terms}</a>
 					</nav>
 				</div>
 			</div>

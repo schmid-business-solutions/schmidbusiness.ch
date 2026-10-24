@@ -4,7 +4,10 @@ export const routes = {
 	home: { de: '/', en: '/en/' },
 	imprint: { de: '/impressum/', en: '/en/imprint/' },
 	privacy: { de: '/datenschutz/', en: '/en/privacy/' },
+	terms: { de: '/agb/', en: '/en/terms/' },
 } as const;
+
+export const linkedin = 'https://www.linkedin.com/in/ivanschmid/';
 
 export type PageKey = keyof typeof routes;
 
@@ -22,6 +25,7 @@ export const ui = {
 		legalNav: 'Rechtliches',
 		imprint: 'Impressum',
 		privacy: 'Datenschutz',
+		terms: 'AGB',
 		home: {
 			title: 'Ivan Schmid – Unternehmer',
 			h1a: 'Aus Ideen',
@@ -63,6 +67,7 @@ export const ui = {
 		legalNav: 'Legal',
 		imprint: 'Legal notice',
 		privacy: 'Privacy',
+		terms: 'Terms',
 		home: {
 			title: 'Ivan Schmid – Entrepreneur',
 			h1a: 'Where ideas',
