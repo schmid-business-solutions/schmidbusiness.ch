@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	output: 'static',
-	site: 'https://ivanschmid.com',
+	site: 'https://schmidbusiness.ch',
 	vite: {
 		ssr: {
 			external: ['svgo']
