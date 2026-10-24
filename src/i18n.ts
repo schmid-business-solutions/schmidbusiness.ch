@@ -49,8 +49,8 @@ export const ui = {
 			sending: 'Wird gesendet …',
 			success: 'Vielen Dank für Ihre Nachricht. Ich melde mich zeitnah persönlich bei Ihnen.',
 			error:
-				'Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an office@ivanschmid.com.',
-			unavailable: 'Das Formular ist gerade nicht verfügbar. Bitte schreiben Sie direkt an office@ivanschmid.com.',
+				'Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder schreiben Sie direkt an office@schmidbusiness.ch.',
+			unavailable: 'Das Formular ist gerade nicht verfügbar. Bitte schreiben Sie direkt an office@schmidbusiness.ch.',
 		},
 		back: '← Zur Startseite',
 	},
@@ -91,8 +91,8 @@ export const ui = {
 			sending: 'Sending …',
 			success: 'Thank you for your message. I will get back to you personally shortly.',
 			error:
-				'Something went wrong while sending. Please try again later or write directly to office@ivanschmid.com.',
-			unavailable: 'The form is currently unavailable. Please write directly to office@ivanschmid.com.',
+				'Something went wrong while sending. Please try again later or write directly to office@schmidbusiness.ch.',
+			unavailable: 'The form is currently unavailable. Please write directly to office@schmidbusiness.ch.',
 		},
 		back: '← Back to home',
 	},
